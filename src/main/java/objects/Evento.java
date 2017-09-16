@@ -10,8 +10,8 @@ public class Evento {
 	private Date data;
 
 	public final Integer NUMERO_MAXIMO_CARACTERES_EVENTO = 150;
-	public final String MENSAGEM_ERRO_VALIDACAO_USUARIO = "O nome permite no máximo 150 caracteres";
-	public final String MENSAGEM_DATA_NÃO_PERMITIDA = "A data do evento deve ser igual ou maior que a de hoje";
+	public final String MENSAGEM_ERRO_VALIDACAO_USUARIO = "O nome permite no maximo 150 caracteres";
+	public final String MENSAGEM_DATA_NAO_PERMITIDA = "A data do evento deve ser igual ou maior que a de hoje";
 	
 	public String getNome() {
 		return nome;
@@ -35,7 +35,7 @@ public class Evento {
 	public void validaDataEvento (Evento evento) throws Exception{
 
 		if(evento.getData().before(new Date())){
-			throw new Exception(MENSAGEM_DATA_NÃO_PERMITIDA);
+			throw new Exception(MENSAGEM_DATA_NAO_PERMITIDA);
 		}
 	}
 	
