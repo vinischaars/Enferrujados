@@ -1,42 +1,44 @@
 package objects;
 
-import java.util.ArrayList;
-
 public class Ingresso {
-
-	private String tipo;
-	private Double valor;
 	
-	public Ingresso() {
-	}
+	private String tipoIngresso;
+	private Integer valorIngresso;
 	
-	Ingresso(String tipo, Double valor){
-		this.tipo = tipo;
-		this.valor = valor;
-	}
+	public final Integer VIP = 1000;
+	public final Integer BACKSTAGE = 800;
+	public final Integer PLATEIAVIP = 500;
+	public final Integer PLATEIA = 300;
 	
-	public String getTipo() {
-		return tipo;
+	
+	public String getTipoIngresso() {
+		return tipoIngresso;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setTipoIngresso(String tipoIngresso) {
+		this.tipoIngresso = tipoIngresso;
 	}
-	public Double getValor() {
-		return valor;
+	public Integer getValorIngresso() {
+		return valorIngresso;
 	}
-	public void setValor(Double valor) {
-		this.valor = valor;
+	public void setValorIngresso(Integer valorIngresso) {
+		this.valorIngresso = valorIngresso;
 	}
 	
-	public ArrayList<Ingresso> criarIngressos(){
-		ArrayList<Ingresso> ingressos = new ArrayList<>();
+	public Integer valorIngresso (Ingresso ingresso) {
+		if(ingresso.getTipoIngresso().equals("VIP")){			
+			return VIP;
+		}
+		if(ingresso.getTipoIngresso().equals("BACKSTAGE")){			
+			return BACKSTAGE;
+		}
+		if(ingresso.getTipoIngresso().equals("PLATEIAVIP")){			
+			return PLATEIAVIP;
+		}
+		if(ingresso.getTipoIngresso().equals("PLATEIA")){			
+			return PLATEIA;
+		}	
 		
-		ingressos.add(new Ingresso("VIP", new Double(1000)));		
-		ingressos.add(new Ingresso("BACKSTAGE", new Double(800)));
-		ingressos.add(new Ingresso("PLATEIA VIP", new Double(500)));
-		ingressos.add(new Ingresso("PLATEIA", new Double(300)));
-		
-		return ingressos;
+		return 0;
 	}
 	
 }

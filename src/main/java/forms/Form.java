@@ -1,10 +1,13 @@
 package forms;
 
+import java.text.DateFormat;
+import javax.swing.JOptionPane;
+
 import objects.Evento;
 import objects.Ingresso;
-import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -13,36 +16,31 @@ public class Form {
 	public static void main(String[] args) {
 		
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		Evento evento = new Evento();
-		Ingresso ingresso = new Ingresso();
+		Evento evento = new Evento();		
+		Ingresso ingresso = new Ingresso();		
 		String dataEvento;
-		
+		String nome;
+		String data;		
 		Scanner scn = new Scanner(System.in);
 		
-		System.out.println("Informe o nome do evento");
-		System.out.println("Informe a data do evento");
+		try{
+			nome = JOptionPane.showInputDialog(null, "Digite o nome do evento: ","Nome do Evento", JOptionPane.PLAIN_MESSAGE);
+			evento.setNome(nome);
+			evento.validaTamanhoNome(evento);		
+			String retorno = JOptionPane.showInputDialog(null, "Digite a data do Evento: ","Data do Evento",JOptionPane.PLAIN_MESSAGE);
+			evento.setData(df.parse(retorno));
+			evento.validaDataEvento(evento);
+
+			String tipoIngresso = JOptionPane.showInputDialog(null, "Digite o tipo do ingresso: ","Tipo Ingresso",JOptionPane.PLAIN_MESSAGE);
+			ingresso.setTipoIngresso(tipoIngresso);
 		
-		ArrayList<Ingresso> ingressos = new ArrayList<>();
-		ingressos = ingresso.criarIngressos();
-		
-		for (int i = 0; i < 4; i++){
-			System.out.println(ingressos.get(i).getTipo());
-			System.out.println(ingressos.get(i).getValor());
+			JOptionPane.showMessageDialog(null, evento.getNome(), "Nome do Evento", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, evento.getData(), "Data do Evento", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, ingresso.getTipoIngresso(), "Tipo do Ingresso", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, ingresso.valorIngresso(ingresso), "Valor do Ingresso", JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-				
-//		try{
-//			evento.setNome(scn.nextLine());
-//			evento.validaTamanhoNome(evento);
-//			dataEvento = scn.nextLine();
-//			evento.setData(df.parse(dataEvento));
-//			evento.validaDataEvento(evento);
-//			System.out.println(evento.getNome());
-//			System.out.println(evento.getData());
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		}
-		
-		
 		
 	}
 
