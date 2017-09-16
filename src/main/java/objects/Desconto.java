@@ -5,8 +5,11 @@ import objects.Ingresso;
  
 public class Desconto {
 	
-	public Integer Desconto (Cliente cliente, Ingresso ingresso) {
-		return ingresso.getValorIngresso()*(cliente.percentualDesconto(cliente)/100);		
+	public Integer calcularDesconto (Cliente cliente, Ingresso ingresso) {
+		System.out.println(ingresso.getValorIngresso());
+		System.out.println(cliente.percentualDesconto(cliente));
+		return ingresso.getValorIngresso()*(cliente.percentualDesconto(cliente)/100);
+		
 	}
 	
 

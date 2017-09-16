@@ -4,8 +4,11 @@ import java.text.DateFormat;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+
+import objects.Desconto;
 import objects.Evento;
 import objects.Ingresso;
+import objects.Cliente;
 import java.text.SimpleDateFormat;
 import java.lang.Object;
 
@@ -16,6 +19,8 @@ public class Form {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Evento evento = new Evento();		
 		Ingresso ingresso = new Ingresso();		
+		Desconto desconto = new Desconto();
+		Cliente cliente = new Cliente();
 		String nome;
 		try{
 			
@@ -31,7 +36,11 @@ public class Form {
 			evento.setDataVendaFim(df.parse(dataFim));
 			evento.validaPeriodoEvento(evento);			
 			String tipoIngresso = JOptionPane.showInputDialog(null, "Digite o tipo do ingresso: ","Tipo Ingresso",JOptionPane.PLAIN_MESSAGE);
-			ingresso.setTipoIngresso(tipoIngresso);				
+			ingresso.setTipoIngresso(tipoIngresso);
+			String tipoCliente = JOptionPane.showInputDialog(null, "Digite o tipo de cliente: ","Tipo Cliente",JOptionPane.PLAIN_MESSAGE);
+			cliente.setTipoCliente(tipoCliente);
+			
+			JOptionPane.showMessageDialog(null, desconto.calcularDesconto(cliente, ingresso), "Desconto", JOptionPane.INFORMATION_MESSAGE);
 		
 			JOptionPane.showMessageDialog(null, evento.getNome(), "Nome do Evento", JOptionPane.INFORMATION_MESSAGE);
 			JOptionPane.showMessageDialog(null, evento.getData(), "Data do Evento", JOptionPane.INFORMATION_MESSAGE);
