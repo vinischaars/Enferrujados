@@ -66,5 +66,5 @@ public class Evento {
 			throw new Exception(MENSAGEM_PERIODO_NAO_PERMITIDO);
 		}
 	}
-
+	
 }
