@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import enf.eventos.domain.Evento;
 import enf.eventos.domain.Ingresso;
 
 @Repository
@@ -38,12 +37,34 @@ public class IngressoRepository {
 		return ingressos;
 	}
 	
-	public List<Ingresso> findById(String idIngresso){
+	public Ingresso buscarPorId(long id){
 
 		String sql = "select * from ingresso where id_ingresso = :id";
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", idIngresso);
+		params.put("id", id);
+
+		Ingresso ingresso = jdbc.queryForObject(sql, params, new RowMapper<Ingresso>(){
+
+			@Override
+			public Ingresso mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Ingresso(
+						rs.getLong("id_ingresso"), 
+						rs.getString("tipo_ingresso"), 
+						rs.getDouble("valor_ingresso"));
+			}
+		});
+
+		return ingresso;
+		
+	}
+
+	public List<Ingresso> buscarPorTipo(String tipo){
+
+		String sql = "select * from ingresso where tipo_ingresso = :tipo";
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("tipo", tipo);
 
 		List<Ingresso> ingressos = jdbc.query(sql, params, new RowMapper<Ingresso>(){
 
@@ -59,5 +80,4 @@ public class IngressoRepository {
 		return ingressos;
 		
 	}
-	
 }

@@ -1,5 +1,8 @@
 package enf.eventos.strategy;
 
+import org.springframework.stereotype.Component;
+
+@Component("MEMBRO_GOLD")
 public class MembroGold implements CalcularDesconto {
 
 	public double percentualDesconto = 0.75;

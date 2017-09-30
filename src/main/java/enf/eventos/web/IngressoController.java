@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import enf.eventos.domain.CompradorDesconto;
+import enf.eventos.domain.Evento;
 import enf.eventos.domain.Ingresso;
 import enf.eventos.service.IngressoService;
 
@@ -27,11 +31,33 @@ public class IngressoController {
 	}	
 	
 	@RequestMapping(method = RequestMethod.GET, value="/buscar/{id}")
-	public ResponseEntity<List<Ingresso>> listaIngressos(@RequestParam(value="id", defaultValue="All") String idIngresso) {
-		if(idIngresso.equals("All")) {
-			return ResponseEntity.ok(service.listar());
-		} else
-			return ResponseEntity.ok(service.findById(idIngresso));
+	public ResponseEntity<Ingresso> buscarPorId(@PathVariable long id) {
+		Ingresso ingresso = service.buscarPorId(id);
+		if (ingresso != null) {
+			return new ResponseEntity<>(ingresso, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
-	
+
+	@RequestMapping(method = RequestMethod.GET, value = "/buscar")
+	public ResponseEntity<List<Ingresso>> buscarPorTipo(@RequestParam String tipo) {
+		List<Ingresso> ingressos = service.buscarPorTipo(tipo);
+		if (!ingressos.isEmpty()) {
+			return new ResponseEntity(ingressos, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/calcular/{idIngresso}/{comprador}")
+	public ResponseEntity<Ingresso> calcularIngressoComDesconto(@PathVariable long idIngresso, @PathVariable CompradorDesconto comprador) {
+		Ingresso ingresso = service.buscarPorId(idIngresso);
+		if (ingresso != null) {
+			ingresso.setValorIngresso(service.calcularValorComDesconto(ingresso, comprador));
+			return new ResponseEntity(ingresso, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+	}
 }
