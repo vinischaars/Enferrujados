@@ -13,7 +13,7 @@ public class Evento {
 	public final Integer NUMERO_MAXIMO_CARACTERES_EVENTO = 150;
 	public final String MENSAGEM_ERRO_VALIDACAO_USUARIO = "O nome permite no maximo 150 caracteres";
 	public final String MENSAGEM_DATA_NAO_PERMITIDA = "A data do evento deve ser igual ou maior que a de hoje";
-	public final String MENSAGEM_PERIODO_NAO_PERMITIDO = "A data de início de venda deve ser inferior a data de fim";	
+	public final String MENSAGEM_PERIODO_NAO_PERMITIDO = "A data de inicio de venda deve ser inferior a data de fim";	
 	
 	public String getNome() {
 		return nome;
