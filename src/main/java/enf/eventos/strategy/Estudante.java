@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component("ESTUDANTE")
 public class Estudante implements CalcularDesconto {
 
-	public double percentualDesconto = 0.5;
+	private static final double percentualDesconto = 0.5;
 	
 	@Override
 	public double calcularValorDesconto(double valor) {
