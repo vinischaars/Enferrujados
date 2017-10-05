@@ -6,6 +6,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,6 +23,7 @@ public class Evento {
     private Long id;
 	
 	@NotNull(message="O nome do evento e obrigatorio")
+	@NotEmpty(message="O nome do evento e obrigatorio")
 	@Size(max=150, message="O nome permite no maximo 150 caracteres")
 	private String name;
 

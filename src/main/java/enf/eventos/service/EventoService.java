@@ -29,5 +29,5 @@ public class EventoService {
 	public Evento criarEvento(Evento evento) {
 		return repository.criarEvento(evento);
 	}
-
+	
 }

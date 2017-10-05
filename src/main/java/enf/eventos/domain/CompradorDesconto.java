@@ -8,9 +8,9 @@ import lombok.Getter;
 public enum CompradorDesconto {
 	ESTUDANTE("ESTUDANTE"),
     IDOSO("IDOSO"),
-    MEMBRO_GOLD("GOLD"),
-    MEMBRO_SILVER("SILVER"),
-    PUBLICO_GERAL("GERAL");
+    GOLD("GOLD"),
+    SILVER("SILVER"),
+    GERAL("GERAL");
 
 	private String comprador;
 	
