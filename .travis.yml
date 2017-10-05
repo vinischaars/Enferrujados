@@ -9,4 +9,4 @@ addons:
   sonarcloud:
     organization: "vinischaars-github"
 script:
-  - sonar-scanner
+  - sonar-scanner-X
