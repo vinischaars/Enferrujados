@@ -7,6 +7,6 @@ before_install:
 
 addons:
   sonarcloud:
-    organization: "vinischaars-github"
+    organization: "tasima-uniritter-github"
 script:
   - sonar-scanner
