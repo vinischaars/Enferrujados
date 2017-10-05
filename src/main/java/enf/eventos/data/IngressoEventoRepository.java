@@ -24,9 +24,8 @@ public class IngressoEventoRepository {
 	@Autowired
 	IngressoRepository ingressoRepository;
 	
-	public List<IngressoEvento> findByEvent(int idEvento) {
+	public List<IngressoEvento> listarIngressosPorIdDoEvento(int idEvento) {
 
-		//String sql = "select * from ingresso_evento";
 		String sql = "SELECT IE.ID_INGRESSO_EVENTO, E.ID_EVENTO, E.NOME_EVENTO, E.DATA_EVENTO, I.ID_INGRESSO, I.TIPO_INGRESSO, I.VALOR_INGRESSO, IE.INICIO_VENDA, IE.FINAL_VENDA FROM INGRESSO_EVENTO IE, EVENTO E, INGRESSO I WHERE E.ID_EVENTO = :id_evento AND IE.ID_EVENTO = E.ID_EVENTO AND I.ID_INGRESSO = IE.ID_INGRESSO";
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -52,9 +51,6 @@ public class IngressoEventoRepository {
 
 		String sql = "INSERT INTO INGRESSO_EVENTO(ID_EVENTO, ID_INGRESSO, INICIO_VENDA, FINAL_VENDA) VALUES (:id_evento, :id_ingresso, :inicio_venda, :final_venda)";
 		
-		//Evento evento = eventoRepository.findById(ingressoEvento.getEvento().getId().toString()).get(0);
-		//Ingresso ingresso = ingressoRepository.findById(ingressoEvento.getIngresso().getId().toString()).get(0);	
-		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id_evento", ingressoEvento.getEvento().getId());
 		params.put("id_ingresso", ingressoEvento.getIngresso().getId());
@@ -78,6 +74,28 @@ public class IngressoEventoRepository {
 		});
 
 		return ingressoAdicionado;
+	}
+	
+	public Boolean encontrarTipoDeIngressoDuplicado(String tipoIngresso, Long idEvento) {
+		
+		String sql = "SELECT COUNT(*) AS TOTAL FROM INGRESSO_EVENTO IE, INGRESSO I WHERE IE.ID_INGRESSO = I.ID_INGRESSO AND I.TIPO_INGRESSO = :tipo AND IE.ID_EVENTO = :id_evento";
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("tipo", tipoIngresso);
+		params.put("id_evento", idEvento);
+
+		Integer registrosEncontrados = jdbc.queryForObject(sql, params, new RowMapper<Integer>(){
+
+			@Override
+			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new Integer(rs.getInt("TOTAL"));
+			}
+		});
+		
+		if (registrosEncontrados > 0)
+			return true;
+		
+		return false;
 	}
 	
 }

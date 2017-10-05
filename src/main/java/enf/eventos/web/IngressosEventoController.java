@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import enf.eventos.domain.Ingresso;
 import enf.eventos.domain.IngressoEvento;
 import enf.eventos.service.IngressoEventoService;
 import enf.eventos.service.IngressoService;
@@ -23,14 +21,30 @@ public class IngressosEventoController {
 
 	@Autowired
 	IngressoEventoService service;
+	@Autowired
+	IngressoService ingressoService;
 
 	@GetMapping
-	public ResponseEntity<List<IngressoEvento>> listaIngressosDoEvento(@PathVariable int idEvento) {
-		return ResponseEntity.ok(service.findByEvent(idEvento));
+	public ResponseEntity<List<IngressoEvento>> listarIngressosPorIdDoEvento(@PathVariable int idEvento) {
+		return ResponseEntity.ok(service.listarIngressosPorIdDoEvento(idEvento));
 	}
 	
 	@PostMapping
-	public ResponseEntity<List<IngressoEvento>> adicionaIngressosEmEventos(@RequestBody IngressoEvento ingressoEvento){
+	public ResponseEntity<?> adicionarIngressosEmEventos(@PathVariable Long idEvento, @RequestBody IngressoEvento ingressoEvento){
+		ingressoEvento.getEvento().setId(idEvento);
+		
+		if (ingressoEvento.getIngresso().getTipoIngresso().isEmpty())
+			ingressoEvento.setIngresso(ingressoService.buscarPorId(ingressoEvento.getIngresso().getId()));
+		
+		String validacao = service.validarOperacao(ingressoEvento);
+		
+		if (!validacao.isEmpty())
+			return ResponseEntity.badRequest().body(validacao);
+		
+//		if (service.encontrarTipoDeIngressoDuplicado(ingressoEvento.getIngresso().getTipoIngresso(),ingressoEvento.getEvento().getId())) {
+//			return ResponseEntity.badRequest().body();
+//		}
+		
 		return ResponseEntity.ok(service.adicionarIngressosEmEventos(ingressoEvento));
 	}
 	
